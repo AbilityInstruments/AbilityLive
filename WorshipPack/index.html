@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    
+  <!-- COMMON -->
+  <script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+  <script type="text/javascript" src="js/ability.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <link rel='stylesheet' href='css/bootstrap.min.css'>
+
+  <!-- MIXER -->
+  <link rel='stylesheet' href='css/mixer.css' />
+  <script type="text/javascript" src="js/mixer.js"></script>
+  <!-- MIXER -->
+  
+  <!-- SHINY -->
+  <link rel="stylesheet" href="css/knobKnob.css" />
+  <script src="js/jquery-1.12.0.min.js"></script>
+  <script src="js/knobKnob.jquery.js"></script>
+  <!-- SHINY -->
+  
+  <!-- ROTARY -->
+  <link href="css/jquery.rotaryswitch.css" rel="stylesheet" type="text/css">
+  <script src="js/jquery.rotaryswitch.js"></script>
+  <!-- ROTARY -->
+
+  <!-- ROTARY -->
+  <link rel='stylesheet' href='css/style.css'>
+  <!-- ROTARY -->
+  
+  
+</head>
+<body onload="drawKeys(); loadSettings(); loadMixer(); loadRotary(); loadShiny(); init();" class="noselect" style="overflow: hidden; padding: 0px; margin: -5px; width: 100%; background:rgba(40,40,42,1.0)">
+
+  
+
+
+ <div style=" background-image: url(images/top.jpg); background-size: auto auto; position: relative; width:1370px; height:110px; ">
+
+
+
+     <div style="display: flex; justify-content: center; float:right; height:110px; width: 500px;">
+
+      <a class="toppadding" title="Insert VST Plugins" style="color:white; margin-right: 5px;" onclick="abilityCore.openVstVisual();" >
+        <img style="margin-left:10px;"  src="data:image/png;base64,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">
+        Insert VST Plugins
+      </a>
+
+      <select id="music_select_id" title="Select Bank"  onchange="bank_changed(this);" class="music_select_class toppadding form-select form-select-lg"  style="margin-left:10px; background-color: transparent; border-style: none; color:white !important">
+      </select>
+
+      <select id="sound_select_id" title="Select Preset"  onchange="sound_changed(this);" class="sound_select_class toppadding form-select form-select-lg" style="background-color: transparent; border-style: none; color:white !important">
+      </select>
+
+
+      <img style="margin-left:10px;" title="Open Sound List Editor" onclick="abilityCore.closeVstVisual()" data-toggle="modal" data-target="#soundlistmodal"  class="toppadding"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAABmJLR0QA/wD/AP+gvaeTAAAFUklEQVRYhe2XW0wUZxiG3znsYVgWVk6CylpAEkVb0Sgm0mg8NmKtRNS0KWm1N1pbm9hDTA1pSW1pTXvT2otqUirxQqtBIk0RW2lTKydjQSxV0LqL4IqsS1l2d3aW2Z1/eoGzIp5m6Ki98E0mmXnz/9888/2nb4D/uajbnkoPGRmOLgDDQAqEa1C6XnxMXFHRyo2x/EQObZL7pQBfJQ36qmiD5KW/PLr5ccIBIzLI7K6+LLkHMkc3oK1cBwmJ6/FB8Z+PFu3m+5Ub2R+cDABGewosC6aD5owAAOIXpiJC2uiPD5aj9DvbowaMZpD65IAkh0TaPMMOS/50yGIYQqsDwrkugJDhNgzDyxIpQYd5Nw6vl+4WsLj2TFqPL/A1HwpPIbJsUAvCMnRwXCxXe7wwv0QVoCLJy4OvP4/wVc+tXjTVDkI2Y+eG+pHBVtecXnWq/cqRfn+QVQs2Wjn2pN68KTmZ+xZlhIARQ3wvMTYL4lbOhXXZLNCx3LBJ5BkA9TtKKspReigWAEpLZbrlkuugAseZDIjl1F8GlgEAnO/2pDn6uo4o71f9pcbMVBjsyRDOOhBqc0COEAoUNkISrADWtc1tXtXT5IsBgLX50/DyoqfVhgYAhMQIdlT8AmefF5d6BxYr/gMzOFIUyyBmTjZs6xbAkJag2GuwfU+8JCNRMewp8ZrgAMBsZJFiiwEAiJEIo/hjniujZbGw1TFmgxwMham9tS1oc/aBodV//yAv4PTFawCAiYnW7v6xAMoRaeQQK3Yldm0aPLALWFp58pu6NufrAUFE3VmnltBRWWNMJDs1fu05rYCi4zr4xg6QgBDlhYx9YLm3FONE0YItK6sbHBd6bpR4fEGrRGTq7tHulMnAkklJ1iuZ4xOLKgvyziq+rtvMw9B9Myi0ORE83QkQGQBAsbRfluR3QDm+xc5Scr++ugNSDE1kgCa+EESnG0w8h6GOnmE4ipJps3EfEYW38dFG76MAuwOQieOchA9li91uiN1uUAYG1iW5wWCrszHyz+A2suPFx1Is3MogZ3qBtnLNxC/EAQBlNvqoxKTcyJszostxw69O8+XrjqN/93oX+oQho54gRpYh6UnxPdlpcWsqC+a3Rrlua7X1KxObMWmRHCZmSSB3FKzT9vzYe+GqJ1VPsNGyxpjI8pn2OQqk6m1gedWpsp9aLr8PABnjbciemPigLprk40NovuiCLAPPZKQ4zr22IgvQsA96g8IyADCwDMpeXQyzUbdDKKrPDp9Cc+c1XPUE7Iqn+ixiKYYHgIhE4Or36w4XEiPo8wYBACYDE601VachKSHucwPLLAxHJLxX/jMsZtW1qCoNhQnCkWGu7Am2ut6bvuo5CABLKn+rONne84oS6GEox558LW/KtCylYNUECACrjzUVeAaEd4VwWNfVzLIUP85iqTleOP9DPeM+0RP9V2leJGvq6ifzPrItLEm6HiU0TYlWE3e4amVe7UhfE+CK6sbt9X91lfmCoqafLbWiaQrzsic2NBYvyVc81YBFNQ2zjrV2/REMhTVnXauW5j6190TRwk2AhpOkzxf6VIHbVjgPs7PSMIYZck/1+3mUfV8P9yCPTtdAMQBtgEMRkgwARgOD/Bw7GFrfRMZyNkxNT4R7kEdAGDIpvmrAOM7YAmC2GJbwRWUDcjNTQenI6PEJaOxwAQBSx8V6BrQCpiekb7UnD7zUfcNraep0oanTpR/dCBlYBlMnJGy5cPNZUw4K6+qzuroDx9uvuLMikv4/denJ8fyszKQ3qp9/tkLxxjRIq344E2M2SuP1QwPMMPP7n5vp1jPmEwHAv5wuKbTJI8d/AAAAAElFTkSuQmCC">
+
+     </div>
+
+     <div class="alert alert-warning alert-dismissible fade show" role="alert" style="display:none;">
+      <span id="alert_msg_id"></span>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+ </div>
+ 
+  <div style="background-image: url(images/mid.jpg); background-size: auto auto; position: relative; width:1370px; height:400px; "> <!-- background-image: url(images/mid.jpg); background-size: auto auto; -->
+   
+    <!--
+    <video id="background-video" autoplay loop muted >
+      <source src="theme/bg_pad.webm" type="video/webm">
+    </video>
+   -->
+   
+   
+    <div style=" background-image: url(images/back_1.png); background-size: 100% 100%; position: absolute; width:600px; height:300px; padding:20px;margin:50px">
+   
+   
+   	 <div class="mixer" style="margin-top:20px; margin-left:50px;">
+        
+		 
+	
+       	 <div class="faderbg" id="fader1">
+		     <div class="upper-controls">
+               <span class="faderpadlabel">PAD 1</span>
+               <button class="button mute">Mute</button>
+               <button class="button solo">Solo</button>
+             </div>
+        	 <input disabled type="text" class="lvl-display"/>
+       	    <input type="range" class="fader" id="track1" isupdating="no" name="points" min="-80" max="20" value="0"/>
+             <div style="font-size: 18px; position: absolute; margin-left:23px; margin-top: -10px; " class="midimap" onclick="midi_mapping('pad_volume_1');" data-toggle="modal" data-target="#midimappingmodal">
+              &#127929;
+            </div>
+      	 </div>
+
+		 
+       	 <div class="faderbg" id="fader2">
+		     <div class="upper-controls">
+          <span class="faderpadlabel">PAD 2</span>
+               <button class="button mute">Mute</button>
+               <button class="button solo">Solo</button>
+             </div>
+        	 <input disabled type="text" class="lvl-display"/>
+       	    <input type="range" class="fader" id="track2" isupdating="no" name="points" min="-80" max="20" value="0"/>
+             <div style="font-size: 18px; position: absolute; margin-left:23px; margin-top: -10px; " class="midimap" onclick="midi_mapping('pad_volume_2');" data-toggle="modal" data-target="#midimappingmodal">
+              &#127929;
+            </div>
+      	 </div>
+		 
+       	 <div class="faderbg" id="fader3">
+		     <div class="upper-controls">
+               <span class="faderpadlabel">PAD 3</span>
+               <button class="button mute">Mute</button>
+               <button class="button solo">Solo</button>
+             </div>
+        	 <input disabled type="text" class="lvl-display"/>
+       	    <input type="range" class="fader" id="track3" isupdating="no" name="points" min="-80" max="20" value="0"/>
+             <div style="font-size: 18px; position: absolute; margin-left:23px; margin-top: -10px; " class="midimap" onclick="midi_mapping('pad_volume_3');" data-toggle="modal" data-target="#midimappingmodal">
+              &#127929;
+            </div>
+      	 </div>
+		 
+       	 <div class="faderbg" id="fader4">
+		     <div class="upper-controls">
+               <span class="faderpadlabel">PAD 4</span>
+               <button class="button mute">Mute</button>
+               <button class="button solo">Solo</button>
+             </div>
+        	 <input disabled type="text" class="lvl-display"/>
+       	    <input type="range" class="fader" id="track4" isupdating="no" name="points" min="-80" max="20" value="0"/>
+             <div style="font-size: 18px; position: absolute; margin-left:23px; margin-top: -10px; " class="midimap" onclick="midi_mapping('pad_volume_4');" data-toggle="modal" data-target="#midimappingmodal">
+              &#127929;
+            </div>
+      	 </div>
+		 
+       	 <div class="faderbg" id="fader5">
+		     <div class="upper-controls">
+               <span class="faderpadlabel">PAD 5</span>
+               <button class="button mute">Mute</button>
+               <button class="button solo">Solo</button>
+             </div>
+        	 <input disabled type="text" class="lvl-display"/>
+       	    <input type="range" class="fader" id="track5" isupdating="no" name="points" min="-80" max="20" value="0"/>
+             <div style="font-size: 18px; position: absolute; margin-left:23px; margin-top: -10px; " class="midimap" onclick="midi_mapping('pad_volume_5');" data-toggle="modal" data-target="#midimappingmodal">
+              &#127929;
+            </div>
+      	 </div>
+	
+	
+		<div style="position: absolute; margin-left:380px; margin-top: 10px;">
+
+		   <div style="color:rgb(206, 206, 206); position:absolute; margin-top: -22px; font-size: 12px; width: 50px; text-align: center;"><span>High</span></div>
+		   <input id="eq_high_pad" type="text" class="rotarySwitch3a" value="0"><br>
+       <div id="eq_high_pad_ind" style="color:rgb(206, 206, 206); position:absolute; margin-top: -60px; margin-left: 46px; font-size: 12px; width: 50px; text-align: center;"><span>0 db</span></div>
+
+       <div style="color:rgb(206, 206, 206); position:absolute; margin-top: -22px; font-size: 12px; width: 50px; text-align: center;"><span>Mid</span></div>
+		   <input id="eq_mid_pad" type="text" class="rotarySwitch3a" value="0"><br>
+       <div id="eq_mid_pad_ind" style="color:rgb(206, 206, 206); position:absolute; margin-top: -60px; margin-left: 46px; font-size: 12px; width: 50px; text-align: center;"><span>0 db</span></div>
+
+
+       <div style="color:rgb(206, 206, 206); position:absolute; margin-top: -22px; font-size: 12px; width: 50px; text-align: center;"><span>Low</span></div>
+       <input id="eq_low_pad" type="text" class="rotarySwitch3a" value="0">
+       <div id="eq_low_pad_ind" style="color:rgb(206, 206, 206); position:absolute; margin-top: -35px; margin-left: 46px; font-size: 12px; width: 50px; text-align: center;"><span>0 db</span></div>
+
+       
+	  </div>
+	
+
+    
+
+
+		</div>
+
+   
+    </div>
+	
+	<div style=" background-image: url(images/back_1.png); background-size: 100% 100%; position: absolute;  left:650px; width:430px; height:300px; padding:20px;margin:50px; color:white">
+	    
+    <!--
+    <select  size="3"  style="margin: 20px; background-color: transparent; color:white; border: none; text-decoration: none; display: inline-block; width: calc(100% - 60px);">
+       <option value="bach" >Bach</option>
+       <option value="mozart">Mozart</option>
+       <option value="villa" selected="selected">Villa Lobos</option>
+    </select>   
+    -->   
+
+    <div style="padding: 10px;">
+      <div style="text-align: center; margin-top: -5px; color: rgb(168, 168, 168); font-size: 13px;">SMART PAD</div>
+      <button id="pad_C" type="button" class="button pad padselected" onclick="setPadsToneByNote($(this).html());">C</button>
+      <button id="pad_Cs" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">C#</button>
+      <button id="pad_D" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">D</button>
+      <button id="pad_Ds" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">D#</button>
+      <button id="pad_E" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">E</button>
+      <button id="pad_F" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">F</button>
+      <br>
+      <button id="pad_G" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">G</button>
+      <button id="pad_Gs" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">G#</button>
+      <button id="pad_A" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">A</button>
+      <button id="pad_As" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">A#</button>
+      <button id="pad_B" type="button" class="button pad" onclick="setPadsToneByNote($(this).html());">B</button>
+      <br>
+      <button type="button" class="button pad padbig" style="visibility: hidden; background: linear-gradient(160deg,rgb(230, 188, 0), rgb(187, 112, 0));" onclick="goToPadVolume('shinybar1','shinyknob1',0,  0);">PAD 1</button>
+      <button type="button" class="button pad padbig" style="visibility: hidden; background: linear-gradient(180deg,rgb(230, 188, 0), rgb(187, 112, 0));" onclick="goToPadVolume('shinybar1','shinyknob1',0,  0);">PAD 1</button>
+      <button type="button" class="button pad padbig" style="visibility: hidden; background: linear-gradient(180deg,rgb(230, 188, 0), rgb(187, 112, 0));" onclick="goToPadVolume('shinybar1','shinyknob1',0,  0);">PAD 1</button>
+      <button id="pad_manual" type="button" class="button pad padbig"  onclick="set_auto_pad(false);">MAN</button>
+      <button id="pad_auto" type="button" class="button pad padbig"  onclick="set_auto_pad(true);">AUTO</button>
+      
+    </div>
+		 
+	</div>
+   
+  <div style="color:rgb(156, 156, 156);  margin-top: 210px; margin-right: 105px; float: right;"><span id="buffercount" >---</span><span> sounds</span></div>
+
+
+
+ </div>
+
+ <div style=" background-image: url(images/bottom.jpg); background-size: auto auto; position: relative; width:1370px; height:210px;">
+   
+	<div id="shinybar1" class="shinybars" style="margin-top: 10px;" >
+
+    <div style="position: absolute;  margin-left:60px; margin-top: 13px; text-align: center; width: 120px; color: lightgray; font-size: 14px;">PIANO VOLUME</div>
+    <div style="position: absolute; margin-left:180px; margin-top: 30px;">
+      <button type="button" class="button" onclick="goToPadVolume('shinybar1','shinyknob1',0,  0);">0%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar1','shinyknob1',0,  25);">25%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar1','shinyknob1',0,  50);">50%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar1','shinyknob1',0,  75);">75%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar1','shinyknob1',0,  100);">100%</button>
+    </div>
+    <div style="font-size: 18px; position: absolute; margin-left:99px; margin-top: 145px; z-index: 99999; " class="midimap" onclick="midi_mapping('shiny_1');" data-toggle="modal" data-target="#midimappingmodal">
+      &#127929;
+    </div>
+
+
+		<div id="shinyknob1" class="shinyknobcontrol" isupdating="no" ></div>
+	</div>
+	
+	<div id="shinybar2" class="shinybars" style="margin-top: 10px; left:210px;">
+
+    <div style="position: absolute;  margin-left:60px; margin-top: 13px; text-align: center; width: 120px; color: lightgray; font-size: 14px;">PAD VOLUME</div>
+    <div style="position: absolute; margin-left:180px; margin-top: 30px;">
+      <button type="button" class="button" onclick="goToPadVolume('shinybar2','shinyknob2',1,  0);">0%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar2','shinyknob2',1,  25);">25%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar2','shinyknob2',1,  50);">50%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar2','shinyknob2',1,  75);">75%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar2','shinyknob2',1,  100);">100%</button>
+    </div>
+    <div style="font-size: 18px; position: absolute; margin-left:99px; margin-top: 145px; z-index: 99999; " class="midimap" onclick="midi_mapping('shiny_2');" data-toggle="modal" data-target="#midimappingmodal">
+      &#127929;
+    </div>
+
+		<div id="shinyknob2" class="shinyknobcontrol" isupdating="no" ></div>
+	</div>
+
+	<div id="shinybar3" class="shinybars" style="margin-top: 10px; left:420px; ">
+
+    <div style="position: absolute;  margin-left:60px; margin-top: 13px; text-align: center; width: 120px; color: lightgray; font-size: 14px;">EFX LEVEL</div>
+    <div style="position: absolute; margin-left:180px; margin-top: 30px;">
+      <button type="button" class="button" onclick="goToPadVolume('shinybar3','shinyknob3',2,  0);">0%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar3','shinyknob3',2,  25);">25%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar3','shinyknob3',2,  50);">50%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar3','shinyknob3',2,  75);">75%</button><br>
+      <button type="button" class="button" onclick="goToPadVolume('shinybar3','shinyknob3',2,  100);">100%</button>
+    </div>
+    <div style="font-size: 18px; position: absolute; margin-left:99px; margin-top: 145px; z-index: 99999; " class="midimap" onclick="midi_mapping('shiny_3');" data-toggle="modal" data-target="#midimappingmodal">
+      &#127929;
+    </div>
+
+		<div id="shinyknob3" class="shinyknobcontrol" isupdating="no" ></div>
+        
+	</div>
+
+	<div id="xxxxxxx" class="shinybars" style="margin-top: 10px; left:630px; width: 250px !important;">
+
+    <div style="position: absolute;  margin-left:60px; margin-top: 13px; text-align: center; width: 170px; color: lightgray; font-size: 14px;">TRANSPOSE</div>
+    <div style="position: absolute !important; margin-left:50px; margin-top: 35px;">
+        <input id="transpose_id" disabled type="text" class="lvl-display" value="C"/>
+        <span style="color: lightgray;">Tone</span>
+        <button id="pad_F" type="button" class="button padnano" onclick="set_transpose(-999);">-</button>
+        <button id="pad_F" type="button" class="button padnano" onclick="set_transpose(999);">+</button>
+        <button id="pad_F" type="button" class="button padnano" onclick="set_transpose(0);">RES</button>
+        <span style="color: lightgray;">Octave</span>
+        <button id="pad_F" type="button" class="button padnano" onclick="set_transpose(-9999);">-</button>
+        <button id="pad_F" type="button" class="button padnano" onclick="set_transpose(9999);">+</button>
+    </div>
+	</div>
+
+	<div id="xxxxxxx" class="shinybars" style="margin-top: 10px; left:840px; width: 300px !important;">
+
+    <div style="position: absolute;  margin-left:60px; margin-top: 13px; text-align: center; width: 250px; color: lightgray; font-size: 14px;">MASTER EQ</div>
+    <div style="position: absolute !important; margin-left:50px; margin-top: 35px;">
+    
+      <div style="position: absolute !important; margin-left:30px; margin-top: 40px;">
+        <div style="color:rgb(206, 206, 206); position:absolute; margin-top: -29px; font-size: 12px; width: 50px; text-align: center;"><span>Low</span></div>
+        <input id="eq_low_master" type="text" class="rotarySwitch3a" value="0">
+        <div id="eq_low_master_ind" style="color:rgb(206, 206, 206); position:absolute; margin-top: 0px; font-size: 12px; width: 50px; text-align: center;"><span>0 db</span></div>
+      </div>
+
+
+      <div style="position: absolute !important; margin-left:110px; margin-top: 40px;">
+        <div style="color:rgb(206, 206, 206); position:absolute; margin-top: -29px; font-size: 12px; width: 50px; text-align: center;"><span>Mid</span></div>
+        <input id="eq_mid_master" type="text" class="rotarySwitch3a" value="0">
+        <div id="eq_mid_master_ind" style="color:rgb(206, 206, 206); position:absolute; margin-top: 0px; font-size: 12px; width: 50px; text-align: center;"><span>0 db</span></div>
+      </div>
+
+      <div style="position: absolute !important; margin-left:190px; margin-top: 40px;">
+        <div style="color:rgb(206, 206, 206); position:absolute; margin-top: -29px; font-size: 12px; width: 50px; text-align: center;"><span>High</span></div>
+        <input id="eq_high_master" type="text" class="rotarySwitch3a" value="0">
+        <div id="eq_high_master_ind" style="color:rgb(206, 206, 206); position:absolute; margin-top: 0px; font-size: 12px; width: 50px; text-align: center;"><span>0 db</span></div>
+      </div>
+
+    </div>
+	</div>
+
+	<div class="shinybars" style="margin-top: 40px; left:1180px; width: 100px !important; ">
+
+    <div style="position: absolute;  margin-left:0px; margin-top: 13px; text-align: center; width: 150px; color: rgb(100, 100, 105); font-size: 14px;">Worship Pack 1.2.0.0</div>
+
+	</div>
+
+
+ </div>
+
+<div style="position: relative; bottom: 0; width: 100%;  margin-bottom: 5px; margin-left: -8px;">
+        <ul id="piano_keys" class="set" ></ul>
+</div>
+
+<div class="modal fade" id="soundlistmodal" tabindex="-1" role="dialog" aria-labelledby="soundlistmodallabel" aria-hidden="true" >
+  <div class="modal-dialog" style="max-width: 90%; " role="document">
+      <div class="modal-content" style="background-color: transparent !important; ">
+      <div class="modal-header text-light" style="background-color: rgba(49, 49, 49, 0.93) !important;">
+          <h4 class="modal-title " id="soundlistmodallabel">Banks and Sounds</h4>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color:rgba(54, 54, 54, 0.93) !important; color:white">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <h5 id="soundlistmodaltext" class="modal-title" id="soundlistmodallabel">Banks</h5>
+            </div>
+            <div class="col-sm">
+              <h5 id="soundlistmodaltext" class="modal-title" id="soundlistmodallabel">Sounds</h5>
+            </div>
+            <div class="col-sm">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              <select id="music_select_id_modal" size="6" onclick="bank_click(this);" onchange="bank_changed(this);" class="music_select_class toppadding form-select form-select-lg" name="cars" id="cars" style="background-color: transparent; border-style: none; color:white !important; width: 100%; height: 100%;">
+              </select>
+            </div>
+            <div class="col-sm">
+              <select id="sound_select_id_modal" size="6" onclick="sound_click(this);" onchange="sound_changed(this, true);" class="sound_select_class toppadding form-select form-select-lg" name="cars" id="cars" style="background-color: transparent; border-style: none; color:white !important; width: 100%; height: 100%;">
+              </select>
+            </div>
+            <div class="col-sm">
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    Type
+                  </div>
+                  <div class="col-sm">
+                    <input id="sel_bank_sound_type" type="text" disabled/>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm">
+                    Name
+                  </div>
+                  <div class="col-sm">
+                    <input id="sel_bank_sound_name" type="text" onchange="bank_sound_type_change()" curtype="" curname="" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm">
+                    
+                  </div>
+                  <div class="col-sm">
+                    <span class="toppadding" onclick="saveSettings(); modal_alert('Bank and Sound','Bank and Sound saved successfully!')" data-toggle="modal" data-target="#alertmodal">
+                      <img title="Save" style="width: 40px;" class="toppadding"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABmJLR0QA/wD/AP+gvaeTAAAEu0lEQVRoge3abUwbdRwH8O899IG210JLV2Ab3aRZcFvGHI65TYKoIE40bsap0RcTXfbCRKPxxXyIL3ylviC6t5gtLPPhDfhC48IcTpYNGRvIBLaBINZCaSkt9Im2d23PF4ohjWZHe03+bfp9+c//9737JHe566VAIYXkVSgpm95rPxMyG/XL2T4ZAOB5QRVaiRpj8Xjjx2+/elnufkngT890zb9x7EiZ3Af/r/zumMe1kdtwOD0JXyj0sNxoWs4yuWI2FaPtaAtj1Ol+fKf9dIOc3USCAaC0xIC2oy1MsUbTKyeaWDCQHTTRYEB+NPFgQF50ToAB+dA5AwbkQecUGMgcnXNgIDN0ToKB9NE5CwbSQ7PZPql0Yp9zo2/wV8n7t1aWMWNT9l5I8BAHLjcb0VBXs66ZjZZSzMy6/VL2EgcuUqtgs1ase06lYHkp+3L6Hk4nBXC+pwDO9xTA+Z4CON9TAOd7CuB8TwGcK1l0XMPw+ZNICBEAAEUzkuZyErwwcxmO0U5UbDTg5g/vIyFEsKPappcyS9wHgLXxzg2Dohlo9BVQa0sBUHBN9cL12zeo2bcPNM1AoWQx0vMuNJuPswDQc7ZZKwqUjUnARlHxK48e73Wv7SQaPH29AyaLCc7wCqKRCCDSUKgY7KqrA03/fXGaLOWgaBrjwx8prnz1rJ1VKJVazsAkEgLncc69AuDLtZ3EgpNxHixLo6q6+q57jWYL6h9rpgBUrq4tLS4gsOR7EClgYu/h0LIdWj2X9jxnKAEoqjZ1nVywbwY6vTbteVahAA1YUteJBHvs/Zgd70Kx0ZhRj8FUqus7d+SLix2P/Asn6h5edt/C9I3PoSkCdj+wF0q1OqO+nXsPmnxu1wsTo0NNfecOdycF8SQxYOfkBbgmurDz/lqo1BrZeo2WMmq/5ZDZ7fiz7dYvg08Rc0mbrfuRFCmo1EVZaKdAUTTNKtguYsAKFQdD2R54nPNZ6Z+6M7IQikU+JAYMAFtqnod9ahqAKGuvZ342meAT3x1qO+8hCqxQ6aHUbkA4GJC11zE96Y1Eg6cAwh5LQiwAPrwALSfpd4DkbK7aZipSc68DhIH/uPk1rLYqSPwLqOSYyzfRjJJp/f7042ZiwEIsCL9rGOaK8qz026p3b9Cpij4gBuyx/wyaEhGLRrLQLkIUk8m4EH+GmBePim3N0Bg2YeyfN62qe7dn/KYFAD63S5wYHVoU+Fg3JdLkvGkBQLFlO2qfaIfH3o+RgU7sqN0FLWdIu2/s+lWvz7PQI0T8b61+CCAKvBqz9QAEPoxl70BGYL93MdTwUveLa9eIuYdToyvZilAwnPa8wPNIinCnrhMMrkQ4EEx7PhRYhigmb6SuS7qkPUsB7rPO7rm0j77OlJpKVFusVi4ZiSnvjI7BvxxIxFYCPBLCklavVd934CHT6jctAPB5XImxwX4vw7JRhVKp0HAGNhEXOD4avZraLe8TXub0dDQ3iTQVpyhxqvnlC7MUBfHS2aeP6QyGT/YcbDTTNAPvvDM+Pjxwm18J1jeduOi/21dLosH/l0udrc9puOJTlfdUl0yODo0nA0v1ja/9FJIym5NgAOjtbD3MUMybwUiy5ckT365InfsL59+2obLkbHQAAAAASUVORK5CYII=">        
+                      <span >Save Preset</span>
+                    </span>
+                  </div>
+                </div>
+
+
+              </div>
+  
+              
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-sm" >
+
+              <span class="toppadding" onclick="create_new_bank();" >
+                <img title="New" style="width: 40px;" data-toggle="modal" data-target="#descriptionModal" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABmJLR0QA/wD/AP+gvaeTAAAEmUlEQVRoge2bX0xTVxzHv/fe/i8tbekfaMXKKOWPEXAujmQaN5ctYcsS4/TJuA0kshfnC3tgsoQHCXFZdE/LxiIa8NGp28uMgsmMe3Akyp8FkT8WBthSENDChd723ruXYfxT8FJuzWnTT9KXc3/n97uf3HNPz7m3BdKkSSkoKUEnTp9bsFmM84k+GQDguIh6gV22hKPR907V1dyUO78k4R/O/eo//sX+bLmLx+LBuB+3uwcw7g/ys6GFvXJL03ImkwtbViaqD1YyFkPGjfrTrXvkzE2kMABYzUZUH6xkTHpdp5zSxAoDiZEmWhiQX5p4YUBe6aQQBuSTThphQB7ppBIGNi6ddMLAxqSTUhiIXzpphYH4pBWJPql4GJucwp9/90qOz8vNYfqHRzshwYc44RybBXt2lq2rj8thhW8i8FhKLHHCWo0aHrdz3f3USgUnJS6p7+F4SAunOmnhVCctnOqkhVOdtHCqkxZOdVJG2FuQb5YSR9z2MBbhKIfeiQHcftCDmcU5iKIIXuChYBgAFKx6MzS8mTncVqdv/+z7xbVyES3Mckv4rbsD9/wjcGSZ4XJaUah1vRQXYllMTE8rTCrDYG37t1dElvumpfZUzAcCxA7pLl8fmv/4CWFmCbvLS+HNzUWGVhsz1qDTodjtxicVu5w7i0pqVAbtP1Wt9QdixRInLELEpTvX0Dl4C7tKt8Flta6rf67Nrvq44p1NOVbLj0fbTjRDfP4dOHHCl+9cx3hoEjuKCkHT8Z0eQ9N4t/RNW77T9WVte0PTs8eIEu7y9WFwegQlW9yy5NvuKTRlZWbWPDu8iRFmuSX83tuB7d6CV8Z+4N779PMqdm8rt+k16jOHLhwzAgQJX7nbAc8mV9zDeDUYmka5x+swiKYmgBDh5QiHgcAInOucoKSy2e5QKhWK/Yfb6vRECPdM3IPDaklojbwcp5GK0pVECHf5epFjSayw256doVdrqokQfrQ4D4NOl9AaBp0OFKh8IpaWvMjHbJcyC68Wc33sxkttFEWribjCoii+ljo0DSURwhQl6ReQG0YQECFiSDMUE7M91rAEnh/Gq8XEQuSFMBFXOEtvQohlE1ojxLIATQ0TIfz2G2Xwz84mtMZYMLAQ4tizRAiXbipCYOZRwvKLEOHzP3yi5XRXiRBWK1QocXoxOT2TkPz/TgUiET56saW2kSVCGAD2lb2PkclJ8IIga96owKN7eHiKC4cbAIKeaWlVGuwr+xDX7t/EW0WFa8ZKnZlFiLjV1zO9yIWPnz/yXQggZLe0wo4tW1Fs96B/dHTDuUSIuDs0OD/zONRyvqr50ko7UX/ysNvterMpU3t/rl8xK0zRFVuLKQUd+zt6LXhBwF99PcHg3Hx7y+cnvwaFp0u517PEiYOq1voDerX6THmB17HZ7lBK7TcWDHDdQ4NBbjn61S9Hmi6/eJxYYQA4dOGY0QjzSQXDfJqX7cx0O7L1sXZVIZbFWDCw4PM/fBKORC9GI+GG1v/v2RchWniFoz836paV7Ed6laYaFDw0xagYUCoeIieIPEcJ1BAbXTqr4nRXW2ob11yy/Qd1vZi1nYOnoAAAAABJRU5ErkJggg==">
+                <span >New Bank</span>
+              </span>
+
+              <span class="toppadding" onclick="delete_bank();" >
+                <img title="Delete" style="width: 40px;" onclick="delete_bank();" class="toppadding"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABmJLR0QA/wD/AP+gvaeTAAAFZElEQVRoge3bT0wUVxwH8O/M7Mw6jOyfWRZYQLGCisY/B4VeTLDFkCzRg/y5moZ46EkvvbS1t5qmF20vPTSxSHoyAjYhUWKghiYmCnZT/6SQltBSV3YRGPYP6+7O7O7rgUKRnaUDjOljs9/jvt/7MZ/MvDczuwEopJC8CmOk6NOrXYtu2RZ62wcDAKqqWRdfJ+RkKvXelx9d+Mns/obAX3X1Bi590Fpu9h/Xy+SLAB79Mo4XgVdpJbr4vtlo1sxmZsXtsqOzw8vJxTt//Pjqd41m9qYSDAAlThs6O7ycQyoaMhNNLRh4O2iqwYD5aOrBgLnobQEGzENvGzBgDnpbgYGto7cdGNgaeluCgc2jty0Y2Bza8rYPajOZejmD4ZGnhuvf2eXhfp34cwgGPNSBPW4ZjQ3HNjSnsqwEf/iDYSO11IHFHVbUVldseJ6Vt6hG6rb1Gt5MCuB8TwGc7ymA8z0FcL6nAM73FMD5nrwB799X4zRSR93roV4yiQRCIyNQhoaQDAaBTAZIpwGLBWAYWMvLIe7exz1pbpaO3bsXW68X1eDU4iKmu7sR9flgczpRKssQDh7MqkvGYrA8+9kSEsXfHre0/ABV/eTE4KDuFwLUXtLK8DDGL16EdXoaNUeOwF1VBaGoSLfWKkko31ONulOnKqqOHr3AFhU9H/V62/Vq6QMTAn9XF+Zv3sTew4dhd7s3NN1eViYcaGys2ul0fjPS0vIFWfMbOHVg/40bSD19il3794NlN3d4LMtiT32921VZ+eFoS8uVN8ZMOUqTogwPIz46ivLqalP6VRw65Ch2OC6svrypAS9vUJW1tab23X38uJvj+WsPvV4bQBF4ursbbo9H9zJmbDYwLte68xmXC4zNlvU5y7Lw1NWVcSx7BaAEnI7HEfX5dDcoprgYQns7hPZ2MCUluvMZWYbQ2gqhowOM3Z417vB4eIvF0vqkuVmiAhx69Ag2h0N/UBAAngcjihDa2rLONFNSsgSVpKUHEYv+o4VcVWWLA14qwMr9+7DJsu4YmZ+HeusWSCy2hF51phlZhnDuHBhRBInHofb2gszP6/axezw7Bau1kwqwOjMDqyTlHCeKsoRZRre1ga2pWTrjkvQvdm4uZw+rJAGE1FABRir1nyVZ6DNnDGNXwnFWOsCZjKEyoijQBgcBQgCGAQiBNjRkDAuAYRieDrDBJypGlsGfPr2CBcOAb2rKuXuvDSFEowOcY2ddHUaW31yz/f1vrGkj6Ew6naQCbC0rQzKW+zU2C9vbi8zkZNZGth76n/4TVIDlpiZEFhZ0xxiXa+U+S+JxqD09K2uWKArU27dB4vGc9+nlhAKBRS2RuE4F2NHQgIii6A+qKqCqOe+zZG5u5T6NVEp/xycEC35/hBfFASq+8WB37ICtvh5hvz/r8ZJEo1B7ewGez/lQQRQFal8foGkgkUjWeCgY1DRN62m4c+c1FWcYACrOn8dsIICMzi2KRCI5sSs18/O62Ew6jcD4+IwaDl8GKHl5AABOklDZ2YmXExPmNSUEUz7fbEpVL5188CAKUAQGAOfJkxAbGjAzNbX1ZoRgemwsFA+Hv20YGOhb/tjQGp5diBR/3d33cutHsX5KS0sl54HjojgbskSfPWf3HjrIsBy34T6ZTAZ/+Xyvooryff3du5+tHjP0Tx7/R0a93naO56956urKHB4Pb3TeQjCoBsfGXmmqevHdgYHba8epBQPAQ6/XZmHZzzmLpU2urLTbKyokvbeqZCyGUCCwuOD3R9Ka1pMIhy8vr9m1oRq8nMdnzxalkskWXhA6AdQyHCcwgEAAlaTTKgF+1xKJ67woDpzo73+9Xq+/AQVRMKDe3eYDAAAAAElFTkSuQmCC">
+                <span >Delete Bank</span>
+              </span>
+
+
+            </div>
+            <div class="col-sm" >
+
+              <span class="toppadding" onclick="create_new_sound();">
+                <img title="New" style="width: 40px;" data-toggle="modal" data-target="#descriptionModal" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABmJLR0QA/wD/AP+gvaeTAAAEmUlEQVRoge2bX0xTVxzHv/fe/i8tbekfaMXKKOWPEXAujmQaN5ctYcsS4/TJuA0kshfnC3tgsoQHCXFZdE/LxiIa8NGp28uMgsmMe3Akyp8FkT8WBthSENDChd723ruXYfxT8FJuzWnTT9KXc3/n97uf3HNPz7m3BdKkSSkoKUEnTp9bsFmM84k+GQDguIh6gV22hKPR907V1dyUO78k4R/O/eo//sX+bLmLx+LBuB+3uwcw7g/ys6GFvXJL03ImkwtbViaqD1YyFkPGjfrTrXvkzE2kMABYzUZUH6xkTHpdp5zSxAoDiZEmWhiQX5p4YUBe6aQQBuSTThphQB7ppBIGNi6ddMLAxqSTUhiIXzpphYH4pBWJPql4GJucwp9/90qOz8vNYfqHRzshwYc44RybBXt2lq2rj8thhW8i8FhKLHHCWo0aHrdz3f3USgUnJS6p7+F4SAunOmnhVCctnOqkhVOdtHCqkxZOdVJG2FuQb5YSR9z2MBbhKIfeiQHcftCDmcU5iKIIXuChYBgAFKx6MzS8mTncVqdv/+z7xbVyES3Mckv4rbsD9/wjcGSZ4XJaUah1vRQXYllMTE8rTCrDYG37t1dElvumpfZUzAcCxA7pLl8fmv/4CWFmCbvLS+HNzUWGVhsz1qDTodjtxicVu5w7i0pqVAbtP1Wt9QdixRInLELEpTvX0Dl4C7tKt8Flta6rf67Nrvq44p1NOVbLj0fbTjRDfP4dOHHCl+9cx3hoEjuKCkHT8Z0eQ9N4t/RNW77T9WVte0PTs8eIEu7y9WFwegQlW9yy5NvuKTRlZWbWPDu8iRFmuSX83tuB7d6CV8Z+4N779PMqdm8rt+k16jOHLhwzAgQJX7nbAc8mV9zDeDUYmka5x+swiKYmgBDh5QiHgcAInOucoKSy2e5QKhWK/Yfb6vRECPdM3IPDaklojbwcp5GK0pVECHf5epFjSayw256doVdrqokQfrQ4D4NOl9AaBp0OFKh8IpaWvMjHbJcyC68Wc33sxkttFEWribjCoii+ljo0DSURwhQl6ReQG0YQECFiSDMUE7M91rAEnh/Gq8XEQuSFMBFXOEtvQohlE1ojxLIATQ0TIfz2G2Xwz84mtMZYMLAQ4tizRAiXbipCYOZRwvKLEOHzP3yi5XRXiRBWK1QocXoxOT2TkPz/TgUiET56saW2kSVCGAD2lb2PkclJ8IIga96owKN7eHiKC4cbAIKeaWlVGuwr+xDX7t/EW0WFa8ZKnZlFiLjV1zO9yIWPnz/yXQggZLe0wo4tW1Fs96B/dHTDuUSIuDs0OD/zONRyvqr50ko7UX/ysNvterMpU3t/rl8xK0zRFVuLKQUd+zt6LXhBwF99PcHg3Hx7y+cnvwaFp0u517PEiYOq1voDerX6THmB17HZ7lBK7TcWDHDdQ4NBbjn61S9Hmi6/eJxYYQA4dOGY0QjzSQXDfJqX7cx0O7L1sXZVIZbFWDCw4PM/fBKORC9GI+GG1v/v2RchWniFoz836paV7Ed6laYaFDw0xagYUCoeIieIPEcJ1BAbXTqr4nRXW2ob11yy/Qd1vZi1nYOnoAAAAABJRU5ErkJggg==">
+                <span >New Preset</span>
+              </span>
+
+              <span class="toppadding" onclick="delete_sound();">
+                <img title="Delete" style="width: 40px;" onclick="delete_sound();" class="toppadding"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABmJLR0QA/wD/AP+gvaeTAAAFZElEQVRoge3bT0wUVxwH8O/M7Mw6jOyfWRZYQLGCisY/B4VeTLDFkCzRg/y5moZ46EkvvbS1t5qmF20vPTSxSHoyAjYhUWKghiYmCnZT/6SQltBSV3YRGPYP6+7O7O7rgUKRnaUDjOljs9/jvt/7MZ/MvDczuwEopJC8CmOk6NOrXYtu2RZ62wcDAKqqWRdfJ+RkKvXelx9d+Mns/obAX3X1Bi590Fpu9h/Xy+SLAB79Mo4XgVdpJbr4vtlo1sxmZsXtsqOzw8vJxTt//Pjqd41m9qYSDAAlThs6O7ycQyoaMhNNLRh4O2iqwYD5aOrBgLnobQEGzENvGzBgDnpbgYGto7cdGNgaeluCgc2jty0Y2Bza8rYPajOZejmD4ZGnhuvf2eXhfp34cwgGPNSBPW4ZjQ3HNjSnsqwEf/iDYSO11IHFHVbUVldseJ6Vt6hG6rb1Gt5MCuB8TwGc7ymA8z0FcL6nAM73FMD5nrwB799X4zRSR93roV4yiQRCIyNQhoaQDAaBTAZIpwGLBWAYWMvLIe7exz1pbpaO3bsXW68X1eDU4iKmu7sR9flgczpRKssQDh7MqkvGYrA8+9kSEsXfHre0/ABV/eTE4KDuFwLUXtLK8DDGL16EdXoaNUeOwF1VBaGoSLfWKkko31ONulOnKqqOHr3AFhU9H/V62/Vq6QMTAn9XF+Zv3sTew4dhd7s3NN1eViYcaGys2ul0fjPS0vIFWfMbOHVg/40bSD19il3794NlN3d4LMtiT32921VZ+eFoS8uVN8ZMOUqTogwPIz46ivLqalP6VRw65Ch2OC6svrypAS9vUJW1tab23X38uJvj+WsPvV4bQBF4ursbbo9H9zJmbDYwLte68xmXC4zNlvU5y7Lw1NWVcSx7BaAEnI7HEfX5dDcoprgYQns7hPZ2MCUluvMZWYbQ2gqhowOM3Z417vB4eIvF0vqkuVmiAhx69Ag2h0N/UBAAngcjihDa2rLONFNSsgSVpKUHEYv+o4VcVWWLA14qwMr9+7DJsu4YmZ+HeusWSCy2hF51phlZhnDuHBhRBInHofb2gszP6/axezw7Bau1kwqwOjMDqyTlHCeKsoRZRre1ga2pWTrjkvQvdm4uZw+rJAGE1FABRir1nyVZ6DNnDGNXwnFWOsCZjKEyoijQBgcBQgCGAQiBNjRkDAuAYRieDrDBJypGlsGfPr2CBcOAb2rKuXuvDSFEowOcY2ddHUaW31yz/f1vrGkj6Ew6naQCbC0rQzKW+zU2C9vbi8zkZNZGth76n/4TVIDlpiZEFhZ0xxiXa+U+S+JxqD09K2uWKArU27dB4vGc9+nlhAKBRS2RuE4F2NHQgIii6A+qKqCqOe+zZG5u5T6NVEp/xycEC35/hBfFASq+8WB37ICtvh5hvz/r8ZJEo1B7ewGez/lQQRQFal8foGkgkUjWeCgY1DRN62m4c+c1FWcYACrOn8dsIICMzi2KRCI5sSs18/O62Ew6jcD4+IwaDl8GKHl5AABOklDZ2YmXExPmNSUEUz7fbEpVL5188CAKUAQGAOfJkxAbGjAzNbX1ZoRgemwsFA+Hv20YGOhb/tjQGp5diBR/3d33cutHsX5KS0sl54HjojgbskSfPWf3HjrIsBy34T6ZTAZ/+Xyvooryff3du5+tHjP0Tx7/R0a93naO56956urKHB4Pb3TeQjCoBsfGXmmqevHdgYHba8epBQPAQ6/XZmHZzzmLpU2urLTbKyokvbeqZCyGUCCwuOD3R9Ka1pMIhy8vr9m1oRq8nMdnzxalkskWXhA6AdQyHCcwgEAAlaTTKgF+1xKJ67woDpzo73+9Xq+/AQVRMKDe3eYDAAAAAElFTkSuQmCC">
+                <span >Delete Preset</span>
+              </span>
+
+            </div>
+            <div class="col-sm">
+
+
+
+            </div>
+          </div>
+        </div>
+
+          
+
+
+
+
+
+
+      </div>
+      <div class="modal-footer" style="background-color: rgba(54, 54, 54, 0.93) !important; ">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="midimappingmodal" tabindex="-1" role="dialog" aria-labelledby="midimappingmodallabel" aria-hidden="true" >
+  <div class="modal-dialog" style="max-width: 70%; " role="document">
+      <div class="modal-content" style="background-color: transparent !important; ">
+      <div class="modal-header text-light" style="background-color: rgba(49, 49, 49, 0.93) !important;">
+          <h4 class="modal-title " id="midimappingmodallabel">Midi Controller Mapping</h4>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color:rgba(54, 54, 54, 0.93) !important; color:white">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <h5 id="midimappingmodaltext" class="modal-title" id="midimappingmodallabel">Actual Midi Event</h5>
+            </div>
+            <div class="col-sm">
+              <h5 id="midimappingmodaltext" class="modal-title" id="midimappingmodallabel">Condition</h5>
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col-sm">
+              <span id="last_midi_event_id" class="modal-title" id="midimappingmodallabel"></span>
+            </div>
+            <div id="midi_mapping_condition" class="col-sm">
+              
+
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer" style="background-color: rgba(54, 54, 54, 0.93) !important; ">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="alertmodallabel" aria-hidden="true" >
+  <div class="modal-dialog" style="max-width: 70%; margin-top: 100px;" role="document">
+      <div class="modal-content" style="background-color: transparent !important; ">
+      <div class="modal-header text-light" style="background-color: rgba(27, 27, 27, 0.93) !important;">
+          <h4 class="modal-title " id="alertmodallabel"></h4>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color:rgba(27, 27, 27, 0.93) !important; color:white">
+
+        <h4 class="modal-title " id="alertmodalbody"></h4>
+
+      </div>
+      <div class="modal-footer" style="background-color: rgba(27, 27, 27, 0.93) !important; ">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
